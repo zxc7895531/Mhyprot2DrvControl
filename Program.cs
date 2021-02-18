@@ -26,29 +26,20 @@ namespace MhyProt2Drv
             }
             else
             {
-                Console.WriteLine("Enuming module of HipsDaemon.exe");
-                uint pid = (uint)Process.GetProcessesByName("HipsDaemon")[0].Id;
-                Console.WriteLine(pid);
-                //List<MhyProtEnumModule> m = mhyprot.EnumProcessModule(pid);
-                //IntPtr baseAddr = IntPtr.Zero;
-                //foreach(MhyProtEnumModule sm in m)
-                //{
-                //    Console.WriteLine("ModuleName: " + sm.ModuleName + " ModulePath:" + sm.ModulePath + " BaseAddress:0x" + sm.BaseAddress.ToString("x2") + " Size:0x" + sm.SizeOfImage.ToString("x2"));
-                //    if (sm.ModuleName == "csrss.exe") baseAddr = sm.BaseAddress;
-                //}
-                //Memory mem = new Memory(mhyprot, pid);
-                //long currentTicks = DateTime.Now.Ticks;
-                //Console.WriteLine("Reading memory of csrss.exe");
-                //for (int i = 0; i < 1000; i++)
-                //{
-                //    mem.Read(baseAddr, 1024);
-                //}
-                //Console.WriteLine("Read memory 1000 times tooks total " + ((DateTime.Now.Ticks - currentTicks) / 10000).ToString() + "ms");
-                Console.WriteLine("Killing...");
-                mhyprot.KillProcess(pid);
+                if (args.Length == 0)
+                {
+                    Console.WriteLine("请输入一个进程名!")
+                }
+                else
+                {
+                    string name = args[0].ToString()
+                    Console.WriteLine("Getting pid...");
+                    uint pid = (uint)Process.GetProcessesByName(name)[0].Id;
+                    Console.WriteLine(pid);
+                    Console.WriteLine("Killing...");
+                    mhyprot.KillProcess(pid);
+                }
             }
-
-            Console.ReadKey();
             mhyprot.CloseHandle();
             loader.UnLoad();
         }
