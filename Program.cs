@@ -28,11 +28,11 @@ namespace MhyProt2Drv
             {
                 if (args.Length == 0)
                 {
-                    Console.WriteLine("请输入一个进程名!")
+                    Console.WriteLine("请输入一个进程名!");
                 }
                 else
                 {
-                    string name = args[0].ToString()
+                    string name = args[0].ToString();
                     Console.WriteLine("Getting pid...");
                     uint pid = (uint)Process.GetProcessesByName(name)[0].Id;
                     Console.WriteLine(pid);
