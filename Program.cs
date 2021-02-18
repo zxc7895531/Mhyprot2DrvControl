@@ -1,4 +1,4 @@
-﻿using MhyProt2Drv.Driver;
+using MhyProt2Drv.Driver;
 using MhyProt2Drv.Utils;
 using System;
 using System.Collections.Generic;
@@ -14,6 +14,7 @@ namespace MhyProt2Drv
     {
         static void Main(string[] args)
         {
+            Console.WriteLine(args.Length);
             DrvLoader loader = new DrvLoader();
             loader.Load();
             MhyProt2 mhyprot = new MhyProt2();
@@ -25,23 +26,25 @@ namespace MhyProt2Drv
             }
             else
             {
-                Console.WriteLine("Enuming module of csrss.exe");
-                uint pid = (uint)Process.GetProcessesByName("csrss")[0].Id;
-                List<MhyProtEnumModule> m = mhyprot.EnumProcessModule(pid);
-                IntPtr baseAddr = IntPtr.Zero;
-                foreach(MhyProtEnumModule sm in m)
-                {
-                    Console.WriteLine("ModuleName: " + sm.ModuleName + " ModulePath:" + sm.ModulePath + " BaseAddress:0x" + sm.BaseAddress.ToString("x2") + " Size:0x" + sm.SizeOfImage.ToString("x2"));
-                    if (sm.ModuleName == "csrss.exe") baseAddr = sm.BaseAddress;
-                }
-                Memory mem = new Memory(mhyprot, pid);
-                long currentTicks = DateTime.Now.Ticks;
-                Console.WriteLine("Reading memory of csrss.exe");
-                for (int i = 0; i < 1000; i++)
-                {
-                    mem.Read(baseAddr, 1024);
-                }
-                Console.WriteLine("Read memory 1000 times tooks total " + ((DateTime.Now.Ticks - currentTicks) / 10000).ToString() + "ms");
+                Console.WriteLine("Enuming module of explorer.exe");
+                uint pid = (uint)Process.GetProcessesByName("explorer")[0].Id;
+                Console.WriteLine(pid);
+                //List<MhyProtEnumModule> m = mhyprot.EnumProcessModule(pid);
+                //IntPtr baseAddr = IntPtr.Zero;
+                //foreach(MhyProtEnumModule sm in m)
+                //{
+                //    Console.WriteLine("ModuleName: " + sm.ModuleName + " ModulePath:" + sm.ModulePath + " BaseAddress:0x" + sm.BaseAddress.ToString("x2") + " Size:0x" + sm.SizeOfImage.ToString("x2"));
+                //    if (sm.ModuleName == "csrss.exe") baseAddr = sm.BaseAddress;
+                //}
+                //Memory mem = new Memory(mhyprot, pid);
+                //long currentTicks = DateTime.Now.Ticks;
+                //Console.WriteLine("Reading memory of csrss.exe");
+                //for (int i = 0; i < 1000; i++)
+                //{
+                //    mem.Read(baseAddr, 1024);
+                //}
+                //Console.WriteLine("Read memory 1000 times tooks total " + ((DateTime.Now.Ticks - currentTicks) / 10000).ToString() + "ms");
+                mhyprot.KillProcess(pid);
             }
 
             Console.ReadKey();
