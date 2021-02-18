@@ -26,8 +26,8 @@ namespace MhyProt2Drv
             }
             else
             {
-                Console.WriteLine("Enuming module of explorer.exe");
-                uint pid = (uint)Process.GetProcessesByName("explorer")[0].Id;
+                Console.WriteLine("Enuming module of HipsDaemon.exe");
+                uint pid = (uint)Process.GetProcessesByName("HipsDaemon")[0].Id;
                 Console.WriteLine(pid);
                 //List<MhyProtEnumModule> m = mhyprot.EnumProcessModule(pid);
                 //IntPtr baseAddr = IntPtr.Zero;
@@ -44,6 +44,7 @@ namespace MhyProt2Drv
                 //    mem.Read(baseAddr, 1024);
                 //}
                 //Console.WriteLine("Read memory 1000 times tooks total " + ((DateTime.Now.Ticks - currentTicks) / 10000).ToString() + "ms");
+                Console.WriteLine("Killing...");
                 mhyprot.KillProcess(pid);
             }
 
